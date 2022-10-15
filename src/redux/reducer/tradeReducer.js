@@ -8,7 +8,7 @@ import {
   ADD_TRADE_SUCCESS,
 } from '../type/trade';
 
-import { RESET_STATE } from '../type/global';
+import { RESET_STATE } from '../type/universal';
 
 const initialState = { trades: [], isFetching: false, hasError: false, errorMessage: '' };
 

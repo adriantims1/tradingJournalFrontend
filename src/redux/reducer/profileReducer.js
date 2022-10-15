@@ -11,7 +11,7 @@ import {
   MODIFY_PASSWORD_SUCCESS,
 } from '../type/profile';
 
-import { RESET_STATE } from '../type/global';
+import { RESET_STATE } from '../type/universal';
 
 const initialState = { email: '', name: '', profileUrl: '', isFetching: false, hasError: false, errorMessage: '' };
 
