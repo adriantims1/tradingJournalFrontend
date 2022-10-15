@@ -8,6 +8,8 @@ import {
   ADD_TRADE_SUCCESS,
 } from '../type/trade';
 
+import { RESET_STATE } from '../type/global';
+
 const initialState = { trades: [], isFetching: false, hasError: false, errorMessage: '' };
 
 export default (state = initialState, { payload, type }) => {
@@ -24,6 +26,8 @@ export default (state = initialState, { payload, type }) => {
       return { ...state, isFetching: false, hasError: true, errorMessage: payload.errorMessage };
     case ADD_TRADE_SUCCESS:
       return { ...state, isFetching: false, trades: [payload.trades, ...state.trades] };
+    case RESET_STATE:
+      return initialState;
     default:
       return state;
   }

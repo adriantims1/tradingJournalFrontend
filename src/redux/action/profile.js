@@ -13,6 +13,8 @@ import {
   MODIFY_PASSWORD_SUCCESS,
 } from '../type/profile';
 
+import { CHECK_SESSION_VALID_SUCCESS } from '../type/authorization';
+
 export const fetchProfile = (email, password) => {
   return async (dispatch) => {
     try {
@@ -23,8 +25,10 @@ export const fetchProfile = (email, password) => {
       });
       const { name, profileUrl } = data.data;
       dispatch({ type: FETCH_PROFILE_SUCCESS, payload: { name, profileUrl, email } });
+      dispatch({ type: CHECK_SESSION_VALID_SUCCESS, payload: { authorized: true } });
     } catch (err) {
-      dispatch({ type: FETCH_PROFILE_FAIL, payload: { errorMessage: err.message } });
+      console.log(err);
+      dispatch({ type: FETCH_PROFILE_FAIL, payload: { errorMessage: err.response.data.data } });
     }
   };
 };

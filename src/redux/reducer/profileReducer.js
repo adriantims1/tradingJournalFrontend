@@ -11,6 +11,8 @@ import {
   MODIFY_PASSWORD_SUCCESS,
 } from '../type/profile';
 
+import { RESET_STATE } from '../type/global';
+
 const initialState = { email: '', name: '', profileUrl: '', isFetching: false, hasError: false, errorMessage: '' };
 
 export default (state = initialState, { type, payload }) => {
@@ -33,6 +35,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, isFetching: false, hasError: true, errorMessage: payload.errorMessage };
     case MODIFY_PASSWORD_SUCCESS:
       return { ...state, isFetching: false };
+    case RESET_STATE:
+      return initialState;
     default:
       return state;
   }

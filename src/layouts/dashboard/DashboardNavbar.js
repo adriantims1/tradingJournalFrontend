@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, IconButton } from '@mui/material';
+// redux
+import { connect } from 'react-redux';
+import { resetState } from '../../redux/action/global';
 // components
 import Iconify from '../../components/Iconify';
 //
 import Searchbar from './Searchbar';
-import AccountPopover from './AccountPopover';
+// import AccountPopover from './AccountPopover';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +42,15 @@ DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func,
 };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+function DashboardNavbar({ onOpenSidebar, resetState }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    resetState(() => {
+      navigate('/', { replace: true });
+    });
+  };
+
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -47,8 +59,16 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         </IconButton>
 
         <Searchbar />
+
         <Box sx={{ flexGrow: 1 }} />
+        <Button Button variant="contained" startIcon={<Iconify icon="eva:log-out-fill" />} onClick={handleLogout}>
+          Logout
+        </Button>
       </ToolbarStyle>
     </RootStyle>
   );
 }
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = { resetState };
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardNavbar);

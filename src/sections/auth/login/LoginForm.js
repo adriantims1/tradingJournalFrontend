@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, IconButton, InputAdornment } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // redux
 import { connect } from 'react-redux';
@@ -17,7 +17,7 @@ import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hoo
 
 // ----------------------------------------------------------------------
 
-function LoginForm({ fetchProfile }) {
+function LoginForm({ fetchProfile, profile }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -39,7 +39,6 @@ function LoginForm({ fetchProfile }) {
   const {
     handleSubmit,
     formState: { isSubmitting },
-    register,
   } = methods;
 
   const onSubmit = ({ email, password }) => {
@@ -74,6 +73,11 @@ function LoginForm({ fetchProfile }) {
           Forgot password?
         </Link>
       </Stack> */}
+      {profile.hasError ? (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {profile.errorMessage}
+        </Alert>
+      ) : null}
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }}>
         Login
@@ -82,7 +86,7 @@ function LoginForm({ fetchProfile }) {
   );
 }
 
-const mapStateToProps = ({ profile }) => ({});
+const mapStateToProps = ({ profile }) => ({ profile });
 
 const mapDispatchToProps = { fetchProfile };
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

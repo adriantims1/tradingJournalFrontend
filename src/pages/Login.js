@@ -1,11 +1,12 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Cookie from 'universal-cookie';
-// redux
-import { connect } from 'react-redux';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography } from '@mui/material';
+// redux
+import { connect } from 'react-redux';
+import { checkSession } from '../redux/action/authorization';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -59,14 +60,14 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-function Login({ profile }) {
+function Login({ authorization, checkSession }) {
   const navigate = useNavigate();
   useEffect(() => {
-    const cookie = new Cookie();
-    if (cookie.get('session')) {
+    checkSession();
+    if (authorization.authorized) {
       navigate('/dashboard', { replace: true });
     }
-  }, [profile.email]);
+  }, [authorization.authorized]);
 
   const smUp = useResponsive('up', 'sm');
 
@@ -120,9 +121,10 @@ function Login({ profile }) {
   );
 }
 
-const mapStateToProps = ({ profile }) => ({
+const mapStateToProps = ({ authorization, profile }) => ({
+  authorization,
   profile,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { checkSession };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
