@@ -1,21 +1,23 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Link, Stack, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+// redux
+import { connect } from 'react-redux';
+import { fetchProfile } from '../../../redux/action/profile';
 // components
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
+// redux
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
-  const navigate = useNavigate();
-
+function LoginForm({ fetchProfile }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -37,10 +39,12 @@ export default function LoginForm() {
   const {
     handleSubmit,
     formState: { isSubmitting },
+    register,
   } = methods;
 
-  const onSubmit = async () => {
-    navigate('/dashboard', { replace: true });
+  const onSubmit = ({ email, password }) => {
+    // navigate('/dashboard', { replace: true });
+    fetchProfile(email, password);
   };
 
   return (
@@ -64,16 +68,21 @@ export default function LoginForm() {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+      {/* <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         <RHFCheckbox name="remember" label="Remember me" />
         <Link variant="subtitle2" underline="hover">
           Forgot password?
         </Link>
-      </Stack>
+      </Stack> */}
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }}>
         Login
       </LoadingButton>
     </FormProvider>
   );
 }
+
+const mapStateToProps = ({ profile }) => ({});
+
+const mapDispatchToProps = { fetchProfile };
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

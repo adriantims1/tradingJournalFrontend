@@ -1,0 +1,6 @@
+export const FETCH_TRADE = 'FETCH_TRADE';
+export const FETCH_TRADE_SUCCESS = 'FETCH_TRADE_SUCCESS';
+export const FETCH_TRADE_FAIL = 'FETCH_TRADE_FAIL';
+export const ADD_TRADE = 'ADD_TRADE';
+export const ADD_TRADE_SUCCESS = 'ADD_TRADE_SUCCESS';
+export const ADD_TRADE_FAIL = 'ADD_TRADE_FAIL';

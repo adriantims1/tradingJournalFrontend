@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
 // @mui
-import { Card, CardHeader, Box } from '@mui/material';
+import { Card, CardHeader, Select, FormControl, InputLabel, MenuItem, CardActions, Box } from '@mui/material';
 // components
 import { BaseOptionChart } from '../../../components/chart';
 
@@ -27,7 +27,7 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
       y: {
         formatter: (y) => {
           if (typeof y !== 'undefined') {
-            return `${y.toFixed(0)} visits`;
+            return `$${y.toFixed(0)}`;
           }
           return y;
         },
@@ -37,6 +37,16 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
 
   return (
     <Card {...other}>
+      <CardActions>
+        <FormControl size="medium" fullWidth>
+          <InputLabel id="select-trade-type">Timeframe</InputLabel>
+          <Select label="Timeframe">
+            <MenuItem value="FB">Daily</MenuItem>
+            <MenuItem value="Indicator">Monthly</MenuItem>
+            <MenuItem value="all">Yearly</MenuItem>
+          </Select>
+        </FormControl>
+      </CardActions>
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">

@@ -3,7 +3,7 @@ import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader } from '@mui/material';
+import { Card, CardHeader, Select, FormControl, InputLabel, MenuItem, CardActions } from '@mui/material';
 // utils
 import { fNumber } from '../../../utils/formatNumber';
 // components
@@ -68,8 +68,17 @@ export default function AppCurrentVisits({ title, subheader, chartColors, chartD
 
   return (
     <Card {...other}>
+      <CardActions>
+        <FormControl size="medium" fullWidth>
+          <InputLabel id="select-trade-type">Trade</InputLabel>
+          <Select label="Trade">
+            <MenuItem value="FB">False Break</MenuItem>
+            <MenuItem value="Indicator">Indicator Signal</MenuItem>
+            <MenuItem value="all">All</MenuItem>
+          </Select>
+        </FormControl>
+      </CardActions>
       <CardHeader title={title} subheader={subheader} />
-
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart type="pie" series={chartSeries} options={chartOptions} height={280} />
       </ChartWrapperStyle>

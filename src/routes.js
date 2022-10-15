@@ -16,19 +16,20 @@ import DashboardApp from './pages/DashboardApp';
 export default function Router() {
   return useRoutes([
     {
+      path: 'login',
+      element: <Login />,
+    },
+    {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
+        { path: 'trade', element: <User /> },
+        { path: 'news', element: <Products /> },
         { path: 'blog', element: <Blog /> },
       ],
     },
-    {
-      path: 'login',
-      element: <Login />,
-    },
+
     {
       path: 'register',
       element: <Register />,
@@ -37,7 +38,7 @@ export default function Router() {
       path: '/',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" /> },
+        { path: '/', element: <Navigate to="login" /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],
