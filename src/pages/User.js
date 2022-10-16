@@ -2,6 +2,7 @@ import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 // material
 import {
@@ -28,15 +29,18 @@ import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
 import Dialog from '../components/Dialog';
+import TradeDetailDialog from '../components/TradeDetailDialog';
 // mock
 import USERLIST from '../_mock/user';
+import { fDateTime } from '../utils/formatTime';
+import { fCurrency } from '../utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'dateTime', label: 'Date Time', alignRight: false },
   { id: 'market', label: 'Market', alignRight: false },
-  { id: 'status', label: 'P/L Amount', alignRight: false },
+  { id: 'amount', label: 'P/L Amount', alignRight: false },
   { id: 'real', label: 'Real', alignRight: false },
   { id: 'openUsing', label: 'FB/Indicator', alignRight: false },
   { id: '' },
@@ -88,7 +92,11 @@ function User({ trade }) {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [openTradeDetailDialog, setOpenTradeDetailDialog] = useState(false);
+
+  const [selectedTradeDetail, setSelectedTradeDetail] = useState('');
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -135,9 +143,10 @@ function User({ trade }) {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  // const filteredTrades = applySortFilter(trade.trades, getComparator(order, orderBy), filterName);
+  const filteredTrades = trade.trades;
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const isTradeNotFound = filteredTrades.length === 0;
 
   return (
     <Page title="User">
@@ -167,7 +176,9 @@ function User({ trade }) {
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+          {selected.length > 0 ? (
+            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+          ) : null}
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -182,34 +193,79 @@ function User({ trade }) {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, isVerified } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+                  {filteredTrades.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                    const {
+                      _id,
+                      timestamp,
+                      marketInformation,
+                      profitOrLossValue,
+                      real,
+                      breakInformation,
+                      indicatorSignalInformation,
+                    } = row;
+                    const isItemSelected = selected.indexOf(_id) !== -1;
+                    const checkBreakOrIndicatorColor = () => {
+                      if (breakInformation === 'None' && indicatorSignalInformation === 'None') {
+                        return 'error';
+                      }
+                      if (breakInformation !== 'None' && indicatorSignalInformation === 'None') {
+                        return 'primary';
+                      }
+                      if (breakInformation === 'None' && indicatorSignalInformation !== 'None') {
+                        return 'secondary';
+                      }
+                      return 'success';
+                    };
+                    const checkBreakOrIndicatorText = () => {
+                      if (breakInformation === 'None' && indicatorSignalInformation === 'None') {
+                        return 'None';
+                      }
+                      if (breakInformation !== 'None' && indicatorSignalInformation === 'None') {
+                        return 'False Break';
+                      }
+                      if (breakInformation === 'None' && indicatorSignalInformation !== 'None') {
+                        return 'Indicator';
+                      }
+                      return 'Both';
+                    };
 
                     return (
                       <TableRow
                         hover
-                        key={id}
+                        key={_id}
                         tabIndex={-1}
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
+                        // onClick={() => {
+                        //   setOpenTradeDetailDialog(true);
+                        //   setSelectedTradeDetail(_id);
+                        // }}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, _id)} />
                         </TableCell>
-                        <TableCell align="left">{name}</TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{fDateTime(timestamp)}</TableCell>
+                        <TableCell align="left">{marketInformation}</TableCell>
+                        <TableCell align="left">{fCurrency(profitOrLossValue)}</TableCell>
+                        <TableCell align="left">{real ? 'Yes' : 'No'}</TableCell>
                         <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                            {sentenceCase(status)}
+                          <Label variant="ghost" color={checkBreakOrIndicatorColor()}>
+                            {sentenceCase(checkBreakOrIndicatorText())}
                           </Label>
                         </TableCell>
 
                         <TableCell align="right">
-                          <UserMoreMenu />
+                          <UserMoreMenu
+                            openSnackbar={() => {
+                              setOpenSnackbar(true);
+                            }}
+                            tradeId={_id}
+                            setOpenTradeDetailDialog={() => {
+                              setOpenTradeDetailDialog(true);
+                              setSelectedTradeDetail(_id);
+                            }}
+                          />
                         </TableCell>
                       </TableRow>
                     );
@@ -221,7 +277,7 @@ function User({ trade }) {
                   )}
                 </TableBody>
 
-                {isUserNotFound && (
+                {isTradeNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
@@ -235,9 +291,9 @@ function User({ trade }) {
           </Scrollbar>
 
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10, 20, 50]}
             component="div"
-            count={USERLIST.length}
+            count={trade.trades.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -258,9 +314,19 @@ function User({ trade }) {
           }}
           severity={trade.hasError ? 'error' : 'success'}
         >
-          {trade.hasError ? trade.errorMessage : 'Trade Added'}
+          {trade.hasError ? trade.errorMessage : 'Operation Succeeded'}
         </Alert>
       </Snackbar>
+      {openTradeDetailDialog ? (
+        <TradeDetailDialog
+          open={openTradeDetailDialog}
+          handleClose={() => {
+            setOpenTradeDetailDialog(false);
+            setSelectedTradeDetail('');
+          }}
+          tradeId={selectedTradeDetail}
+        />
+      ) : null}
     </Page>
   );
 }

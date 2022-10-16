@@ -31,7 +31,7 @@ function Router({ checkSession }) {
       path: '/dashboard',
       element: <ProtectedRoute element={<DashboardLayout />} />,
       children: [
-        { index: true, element: <ProtectedRoute element={<DashboardApp />} /> },
+        { path: 'app', element: <ProtectedRoute element={<DashboardApp />} /> },
         { path: 'trade', element: <ProtectedRoute element={<User />} /> },
         { path: 'news', element: <ProtectedRoute element={<Products />} /> },
         { path: 'blog', element: <ProtectedRoute element={<Blog />} /> },
