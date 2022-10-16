@@ -63,7 +63,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 function Login({ authorization, checkSession }) {
   const navigate = useNavigate();
   useEffect(() => {
-    checkSession();
     if (authorization.authorized) {
       navigate('/dashboard', { replace: true });
     }

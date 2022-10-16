@@ -2,12 +2,12 @@ import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 // material
 import {
   Card,
   Table,
   Stack,
-  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -17,6 +17,8 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 // components
 import Page from '../components/Page';
@@ -25,6 +27,7 @@ import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import Dialog from '../components/Dialog';
 // mock
 import USERLIST from '../_mock/user';
 
@@ -70,7 +73,11 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+function User({ trade }) {
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -135,11 +142,26 @@ export default function User() {
   return (
     <Page title="User">
       <Container>
+        <Dialog
+          open={openDialog}
+          handleClose={() => {
+            setOpenDialog(false);
+          }}
+          openSnackbar={() => {
+            setOpenSnackbar(true);
+          }}
+        />
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Trade
           </Typography>
-          <Button variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setOpenDialog(true);
+            }}
+            startIcon={<Iconify icon="eva:plus-fill" />}
+          >
             New Trade
           </Button>
         </Stack>
@@ -223,6 +245,29 @@ export default function User() {
           />
         </Card>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => {
+          setOpenSnackbar(false);
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setOpenSnackbar(false);
+          }}
+          severity={trade.hasError ? 'error' : 'success'}
+        >
+          {trade.hasError ? trade.errorMessage : 'Trade Added'}
+        </Alert>
+      </Snackbar>
     </Page>
   );
 }
+
+const mapStateToProps = ({ trade }) => ({
+  trade,
+});
+
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -8,7 +8,7 @@ const initialState = { authorized: false, isFetching: false, errorMessage: '' };
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case CHECK_SESSION_VALID:
-      return { ...state, isFetching: true, errorMessge: '' };
+      return { isFetching: true, errorMessge: '', authorized: false };
     case CHECK_SESSION_VALID_FAIL:
       return { ...state, isFetching: false, errorMessage: payload.errorMessage };
     case CHECK_SESSION_VALID_SUCCESS:

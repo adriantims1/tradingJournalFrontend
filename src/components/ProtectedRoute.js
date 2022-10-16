@@ -1,10 +1,16 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useCallback } from 'react';
 // redux
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ authorization, element }) => (authorization.authorized ? element : <Navigate to="/" />);
+const ProtectedRoute = ({ authorization, element }) => {
+  const checkAuthorization = useCallback(() => {
+    console.log(authorization.authorized);
+    return authorization.authorized;
+  }, [authorization.authorized]);
+  return checkAuthorization() ? element : <Navigate to="/" />;
+};
 
 const mapStateToProps = ({ authorization }) => ({ authorization });
 

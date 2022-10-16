@@ -1,5 +1,6 @@
 /* eslint-disable arrow-body-style */
 import axios from 'axios';
+import FormData from 'form-data';
 
 import {
   FETCH_TRADE,
@@ -22,15 +23,21 @@ export const fetchTrade = (userId) => {
   };
 };
 
-export const addTrade = (newTrade) => {
-  return async (dispatch, getState) => {
+export const addTrade = (newTrade, next) => {
+  return async (dispatch) => {
     try {
-      const state = getState();
       dispatch({ type: ADD_TRADE });
-      await axios.post(`http://localhost:5000/api/profile/trade`, {
+      const formData = new FormData();
+      formData.append('image', newTrade.entryScreenshot);
+      const data = await axios.post('http://localhost:5000/api/trade/picture', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      await axios.post(`http://localhost:5000/api/trade`, {
         ...newTrade,
+        entryScreenshot: data.data.data,
       });
       dispatch({ type: ADD_TRADE_SUCCESS, payload: { trades: newTrade } });
+      next();
     } catch (error) {
       dispatch({ type: ADD_TRADE_FAIL, payload: { errorMessage: error.message } });
     }
