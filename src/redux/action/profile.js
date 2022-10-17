@@ -19,7 +19,7 @@ export const fetchProfile = (email, password) => {
   return async (dispatch) => {
     try {
       dispatch({ type: FETCH_PROFILE });
-      const data = await axios.post('http://localhost:5000/api/profile/login', {
+      const data = await axios.post('https://tradingjournalbackend.azurewebsites.net/api/profile/login', {
         email,
         password,
       });
@@ -37,7 +37,7 @@ export const modifyProfilePictureOrName = (profileUrl, name, email) => {
   return async (dispatch) => {
     try {
       dispatch({ type: MODIFY_PROFILE });
-      await axios.put('http://localhost:5000/api/profile', { profileUrl, name });
+      await axios.put('https://tradingjournalbackend.azurewebsites.net/api/profile', { profileUrl, name });
       dispatch({ type: MODIFY_PROFILE_SUCCESS, payload: { profileUrl, name, email } });
     } catch (err) {
       dispatch({ type: MODIFY_PROFILE_FAIL, payload: { errorMessage: err.message } });
@@ -49,7 +49,7 @@ export const modifyPassword = (password) => {
   return async (dispatch) => {
     try {
       dispatch({ type: MODIFY_PASSWORD });
-      await axios.put('http://localhost:5000/api/profile/password', { password });
+      await axios.put('https://tradingjournalbackend.azurewebsites.net/api/profile/password', { password });
       dispatch({ type: MODIFY_PASSWORD_SUCCESS });
     } catch (err) {
       dispatch({ type: MODIFY_PASSWORD_FAIL, payload: { errorMessage: err.message } });

@@ -3,7 +3,7 @@ import { RESET_STATE } from '../type/universal';
 
 export const resetState = (callBack) => async (dispatch) => {
   try {
-    await axios.post('http://localhost:5000/api/profile/logout');
+    await axios.post('https://tradingjournalbackend.azurewebsites.net/api/profile/logout');
     localStorage.removeItem('persist:root');
     dispatch({ type: RESET_STATE });
     callBack();

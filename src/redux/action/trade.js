@@ -18,7 +18,7 @@ export const fetchTrade = () => {
   return async (dispatch) => {
     try {
       dispatch({ type: FETCH_TRADE });
-      const data = await axios.get(`http://localhost:5000/api/trade/`);
+      const data = await axios.get(`https://tradingjournalbackend.azurewebsites.net/api/trade/`);
       dispatch({ type: FETCH_TRADE_SUCCESS, payload: { trades: data.data.data } });
     } catch (error) {
       dispatch({ type: FETCH_TRADE_FAIL, payload: { errorMessage: error.message } });
@@ -32,10 +32,10 @@ export const addTrade = (newTrade, success, fail) => {
       dispatch({ type: ADD_TRADE });
       const formData = new FormData();
       formData.append('image', newTrade.entryScreenshot);
-      const data = await axios.post('http://localhost:5000/api/trade/picture', formData, {
+      const data = await axios.post('https://tradingjournalbackend.azurewebsites.net/api/trade/picture', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      const allTrades = await axios.post(`http://localhost:5000/api/trade`, {
+      const allTrades = await axios.post(`https://tradingjournalbackend.azurewebsites.net/api/trade`, {
         ...newTrade,
         entryScreenshot: data.data.data,
       });
@@ -52,7 +52,7 @@ export const deleteTrade = (tradeId, next) => {
   return async (dispatch) => {
     try {
       dispatch({ type: DELETE_TRADE });
-      const data = await axios.delete('http://localhost:5000/api/trade', { Id: tradeId });
+      const data = await axios.delete('https://tradingjournalbackend.azurewebsites.net/api/trade', { Id: tradeId });
       dispatch({ type: DELETE_TRADE_SUCCESS, payload: { trades: data.data.data } });
       next();
     } catch (error) {
