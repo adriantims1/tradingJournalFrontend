@@ -1,9 +1,10 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+/* eslint-disable react/prop-types */
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import Cookie from 'universal-cookie';
+
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
+import { Card, Container, Typography } from '@mui/material';
 // redux
 import { connect } from 'react-redux';
 import { checkSession } from '../redux/action/authorization';
@@ -14,7 +15,6 @@ import Page from '../components/Page';
 import Logo from '../components/Logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
-import AuthSocial from '../sections/auth/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -60,7 +60,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-function Login({ authorization, checkSession }) {
+function Login({ authorization }) {
   const navigate = useNavigate();
   useEffect(() => {
     if (authorization.authorized) {
@@ -68,7 +68,7 @@ function Login({ authorization, checkSession }) {
     }
   }, [authorization.authorized]);
 
-  const smUp = useResponsive('up', 'sm');
+  // const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
 

@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate, useRoutes } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Navigate, useRoutes } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 import ProtectedRoute from './components/ProtectedRoute';

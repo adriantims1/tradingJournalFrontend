@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // material
 import { styled } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
+import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput } from '@mui/material';
 // component
 import Iconify from '../../../components/Iconify';
 
@@ -14,18 +14,18 @@ const RootStyle = styled(Toolbar)(({ theme }) => ({
   padding: theme.spacing(0, 1, 0, 3),
 }));
 
-const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
-  width: 240,
-  transition: theme.transitions.create(['box-shadow', 'width'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter,
-  }),
-  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
-  '& fieldset': {
-    borderWidth: `1px !important`,
-    borderColor: `${theme.palette.grey[500_32]} !important`,
-  },
-}));
+// const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
+//   width: 240,
+//   transition: theme.transitions.create(['box-shadow', 'width'], {
+//     easing: theme.transitions.easing.easeInOut,
+//     duration: theme.transitions.duration.shorter,
+//   }),
+//   '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
+//   '& fieldset': {
+//     borderWidth: `1px !important`,
+//     borderColor: `${theme.palette.grey[500_32]} !important`,
+//   },
+// }));
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ UserListToolbar.propTypes = {
   onFilterName: PropTypes.func,
 };
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserListToolbar({ numSelected }) {
   return (
     <RootStyle
       sx={{

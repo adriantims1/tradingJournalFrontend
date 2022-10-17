@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { RESET_STATE } from '../type/universal';
-import { CHECK_SESSION_VALID_SUCCESS } from '../type/authorization';
 
 export const resetState = (callBack) => async (dispatch) => {
   try {

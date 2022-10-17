@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as Yup from 'yup';
 import { useState } from 'react';
 
@@ -5,14 +6,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, Alert } from '@mui/material';
+import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // redux
 import { connect } from 'react-redux';
 import { fetchProfile } from '../../../redux/action/profile';
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../components/hook-form';
 // redux
 
 // ----------------------------------------------------------------------

@@ -1,23 +1,10 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-boolean-value */
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  Stack,
-  Typography,
-  LinearProgress,
-  Paper,
-} from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { connect } from 'react-redux';
 import { fDateTime } from '../utils/formatTime';
 import { fCurrency } from '../utils/formatNumber';

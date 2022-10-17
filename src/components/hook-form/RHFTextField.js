@@ -11,7 +11,7 @@ RHFTextField.propTypes = {
 };
 
 export default function RHFTextField({ name, ...other }) {
-  const { control, register } = useFormContext();
+  const { control } = useFormContext();
 
   return (
     <Controller

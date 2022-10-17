@@ -1,21 +1,20 @@
-import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
-import Iconify from '../components/Iconify';
+
 // sections
 import {
-  AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
+  // AppTasks,
+  // AppNewsUpdate,
+  // AppOrderTimeline,
   AppCurrentVisits,
   AppWebsiteVisits,
-  AppTrafficBySite,
+  // AppTrafficBySite,
   AppWidgetSummary,
-  AppCurrentSubject,
-  AppConversionRates,
+  // AppCurrentSubject,
+  // AppConversionRates,
 } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
