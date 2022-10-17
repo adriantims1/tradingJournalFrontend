@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unused-prop-types */
 import PropTypes from 'prop-types';
 // material
 import { styled } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput } from '@mui/material';
+import { Toolbar, Tooltip, IconButton, Typography } from '@mui/material';
 // component
 import Iconify from '../../../components/Iconify';
 
