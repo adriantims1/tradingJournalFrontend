@@ -13,6 +13,6 @@ export const checkSession = () => async (dispatch) => {
     }
     dispatch({ type: CHECK_SESSION_VALID_SUCCESS, payload: { authorized: data.data.status === 'success' } });
   } catch (error) {
-    dispatch({ type: CHECK_SESSION_VALID_FAIL, payload: { errorMessage: error } });
+    dispatch({ type: CHECK_SESSION_VALID_FAIL, payload: { errorMessage: error.response.data.data } });
   }
 };
