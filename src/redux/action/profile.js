@@ -40,7 +40,7 @@ export const modifyProfilePictureOrName = (profileUrl, name, email) => {
       await axios.put('https://tradingjournalbackend.azurewebsites.net/api/profile', { profileUrl, name });
       dispatch({ type: MODIFY_PROFILE_SUCCESS, payload: { profileUrl, name, email } });
     } catch (err) {
-      dispatch({ type: MODIFY_PROFILE_FAIL, payload: { errorMessage: err.message } });
+      dispatch({ type: MODIFY_PROFILE_FAIL, payload: { errorMessage: err.response.data.data } });
     }
   };
 };
@@ -52,7 +52,7 @@ export const modifyPassword = (password) => {
       await axios.put('https://tradingjournalbackend.azurewebsites.net/api/profile/password', { password });
       dispatch({ type: MODIFY_PASSWORD_SUCCESS });
     } catch (err) {
-      dispatch({ type: MODIFY_PASSWORD_FAIL, payload: { errorMessage: err.message } });
+      dispatch({ type: MODIFY_PASSWORD_FAIL, payload: { errorMessage: err.response.data.data } });
     }
   };
 };

@@ -21,7 +21,7 @@ export const fetchTrade = () => {
       const data = await axios.get(`https://tradingjournalbackend.azurewebsites.net/api/trade/`);
       dispatch({ type: FETCH_TRADE_SUCCESS, payload: { trades: data.data.data } });
     } catch (error) {
-      dispatch({ type: FETCH_TRADE_FAIL, payload: { errorMessage: error.message } });
+      dispatch({ type: FETCH_TRADE_FAIL, payload: { errorMessage: error.response.data.data } });
     }
   };
 };
