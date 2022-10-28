@@ -19,10 +19,17 @@ export const fetchProfile = (email, password) => {
   return async (dispatch) => {
     try {
       dispatch({ type: FETCH_PROFILE });
-      const data = await axios.post('https://tradingjournalbackend.azurewebsites.net/api/profile/login', {
-        email,
-        password,
-      });
+      const data = await axios.post(
+        `${
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost:5000'
+            : 'https://tradingjournalbackend.azurewebsites.net'
+        }/api/profile/login`,
+        {
+          email,
+          password,
+        }
+      );
       const { name, profileUrl } = data.data;
       dispatch({ type: FETCH_PROFILE_SUCCESS, payload: { name, profileUrl, email } });
       dispatch({ type: CHECK_SESSION_VALID_SUCCESS, payload: { authorized: true } });
@@ -37,7 +44,14 @@ export const modifyProfilePictureOrName = (profileUrl, name, email) => {
   return async (dispatch) => {
     try {
       dispatch({ type: MODIFY_PROFILE });
-      await axios.put('https://tradingjournalbackend.azurewebsites.net/api/profile', { profileUrl, name });
+      await axios.put(
+        `${
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost:5000'
+            : 'https://tradingjournalbackend.azurewebsites.net'
+        }/api/profile`,
+        { profileUrl, name }
+      );
       dispatch({ type: MODIFY_PROFILE_SUCCESS, payload: { profileUrl, name, email } });
     } catch (err) {
       dispatch({ type: MODIFY_PROFILE_FAIL, payload: { errorMessage: err.response.data.data } });
@@ -49,7 +63,14 @@ export const modifyPassword = (password) => {
   return async (dispatch) => {
     try {
       dispatch({ type: MODIFY_PASSWORD });
-      await axios.put('https://tradingjournalbackend.azurewebsites.net/api/profile/password', { password });
+      await axios.put(
+        `${
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost:5000'
+            : 'https://tradingjournalbackend.azurewebsites.net'
+        }/api/profile/password`,
+        { password }
+      );
       dispatch({ type: MODIFY_PASSWORD_SUCCESS });
     } catch (err) {
       dispatch({ type: MODIFY_PASSWORD_FAIL, payload: { errorMessage: err.response.data.data } });

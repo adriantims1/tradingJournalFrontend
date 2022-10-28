@@ -9,7 +9,7 @@ import {
   DELETE_TRADE,
   DELETE_TRADE_FAIL,
   DELETE_TRADE_SUCCESS,
-} from '../type/trade';
+} from '../type/future';
 
 import { RESET_STATE } from '../type/universal';
 

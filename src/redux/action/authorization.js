@@ -5,7 +5,14 @@ import { RESET_STATE } from '../type/universal';
 export const checkSession = () => async (dispatch) => {
   try {
     dispatch({ type: CHECK_SESSION_VALID });
-    const data = await axios.get('https://tradingjournalbackend.azurewebsites.net/api/profile/session');
+    const data = await axios.get(
+      `${
+        process.env.NODE_ENV === 'development'
+          ? 'http://localhost:5000'
+          : 'https://tradingjournalbackend.azurewebsites.net'
+      }/api/profile/session`
+    );
+
     console.log(data.data.status);
     if (data.data.status !== 'success') {
       localStorage.removeItem('persist:root');

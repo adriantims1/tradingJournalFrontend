@@ -77,7 +77,7 @@ const TABLE_HEAD = [
 //   return stabilizedThis.map((el) => el[0]);
 // }
 
-function User({ trade }) {
+function User({ future }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -143,8 +143,8 @@ function User({ trade }) {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-  // const filteredTrades = applySortFilter(trade.trades, getComparator(order, orderBy), filterName);
-  const filteredTrades = trade.trades;
+  // const filteredTrades = applySortFilter(future.trades, getComparator(order, orderBy), filterName);
+  const filteredTrades = future.trades;
 
   const isTradeNotFound = filteredTrades.length === 0;
 
@@ -293,7 +293,7 @@ function User({ trade }) {
           <TablePagination
             rowsPerPageOptions={[10, 20, 50]}
             component="div"
-            count={trade.trades.length}
+            count={future.trades.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -312,9 +312,9 @@ function User({ trade }) {
           onClose={() => {
             setOpenSnackbar(false);
           }}
-          severity={trade.hasError ? 'error' : 'success'}
+          severity={future.hasError ? 'error' : 'success'}
         >
-          {trade.hasError ? trade.errorMessage : 'Operation Succeeded'}
+          {future.hasError ? future.errorMessage : 'Operation Succeeded'}
         </Alert>
       </Snackbar>
       {openTradeDetailDialog ? (
@@ -331,8 +331,8 @@ function User({ trade }) {
   );
 }
 
-const mapStateToProps = ({ trade }) => ({
-  trade,
+const mapStateToProps = ({ future }) => ({
+  future,
 });
 
 const mapDispatchToProps = {};

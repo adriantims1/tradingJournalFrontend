@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
 import profileReducer from './profileReducer';
-import tradeReducer from './tradeReducer';
+import futureReducer from './futureReducer';
 import authorizationReducer from './authorizationReducer';
 
 const rootReducer = combineReducers({
   profile: profileReducer,
-  trade: tradeReducer,
+  future: futureReducer,
   authorization: authorizationReducer,
 });
 

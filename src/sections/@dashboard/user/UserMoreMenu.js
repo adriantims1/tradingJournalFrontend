@@ -16,7 +16,7 @@ import {
 // component
 import Iconify from '../../../components/Iconify';
 // redux
-import { deleteTrade } from '../../../redux/action/trade';
+import { deleteTrade } from '../../../redux/action/future';
 
 // ----------------------------------------------------------------------
 

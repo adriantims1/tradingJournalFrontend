@@ -19,7 +19,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import { connect } from 'react-redux';
-import { addTrade } from '../redux/action/trade';
+import { addTrade } from '../redux/action/future';
 
 function FormDialog({ open, handleClose, addTrade, profile, openSnackbar }) {
   const [market, setMarket] = useState('Mini S&P500');

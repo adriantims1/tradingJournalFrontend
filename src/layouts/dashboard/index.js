@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 // redux action
-import { fetchTrade } from '../../redux/action/trade';
+import { fetchTrade } from '../../redux/action/future';
 
 // ----------------------------------------------------------------------
 
