@@ -80,7 +80,14 @@ function LoginForm({ fetchProfile, profile }) {
         </Alert>
       ) : null}
 
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ my: 2 }}>
+      <LoadingButton
+        fullWidth
+        size="large"
+        type="submit"
+        variant="contained"
+        loading={profile.isFetching}
+        sx={{ my: 2 }}
+      >
         Login
       </LoadingButton>
     </FormProvider>
