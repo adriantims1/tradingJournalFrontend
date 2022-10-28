@@ -37,10 +37,7 @@ function LoginForm({ fetchProfile, profile }) {
     defaultValues,
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = ({ email, password }) => {
     // navigate('/dashboard', { replace: true });
